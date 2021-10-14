@@ -8,15 +8,15 @@ const user_1 = __importDefault(require("../models/user"));
 const mongoose_1 = __importDefault(require("mongoose"));
 const create = (req, res, next) => {
     logging_1.default.info('Attempting to create blog ...');
-    const { writer, author, title, url, year, otherInfo } = req.body;
+    console.log(req.body);
+    const { name, dob, address, description } = req.body;
+    console.log(name);
     const user = new user_1.default({
         _id: new mongoose_1.default.Types.ObjectId(),
-        author,
-        title,
-        writer,
-        url,
-        year,
-        otherInfo
+        name,
+        dob,
+        address,
+        description,
     });
     return user
         .save()
