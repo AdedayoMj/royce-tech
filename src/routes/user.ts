@@ -8,8 +8,8 @@ router.get('/validate', extractJWT, controller.validateToken);
 router.post('/login', controller.loginUser)
 router.post('/register', controller.registerUser)
 router.get('/findUser/:userID', extractJWT, controller.read)
-router.patch('/updateUser/:userID',extractJWT, controller.update)
-router.delete('/deleteUser/:userID',extractJWT, controller.deleteUserData)
-router.get('/getAllUsers', controller.readAll)
+router.patch('/updateUser/:userID', extractJWT, controller.update)
+router.delete('/deleteUser/:userID', extractJWT, controller.deleteUserData)
+router.get('/', controller.readAll)
 
 export = router;

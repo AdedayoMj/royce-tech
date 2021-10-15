@@ -6,16 +6,15 @@ This is a simple REST API developed using node, mongodb and express with typescr
 
 -   Create a MongoDB atlas to get the secret url and access key
 -   Create a Circle CI account
--   Install global TypeScript and TypeScript Node
-    `` npm install -g typescript ts-node ``
+-   Install global TypeScript and TypeScript Node `npm install -g typescript ts-node`
 
 ## To run locally
 
--   Git clone https://github.com/AdedayoMj/royce-tech.git 
+-   Git clone https://github.com/AdedayoMj/royce-tech.git
 -   run `npm install`
--   run `ts-node-dev src/server.ts`         -  This will start the application and run on port 7000 
--   run `npm run build` then `npm start`    - This can also be used to start the application
--   run `npm run dev`                       - This will start the application in development mode
+-   run `ts-node-dev src/server.ts` - This will start the application and run on port 7000
+-   run `npm run build` then `npm start` - This can also be used to start the application
+-   run `npm run dev` - This will start the application in development mode
 
 ## Folder Structure
 
@@ -23,26 +22,40 @@ This is a simple REST API developed using node, mongodb and express with typescr
     .
     ├── .vscode                 # project settings
     ├── build                   # Compiled files (alternatively `dist`)
-    ├── src                     
+    ├── src
         ├── config                          # Application variables and logging alert configuration
         ├── controllers                     # Express route controllers for all the endpoints of the app
         ├── interface                       # models interfaces
         ├── middleware                      # jwt token validation
-        ├── models                          # DB Models 
+        ├── models                          # DB Models
         ├── routes                          # Application routes / endpoints
         ├── services                        # Application validation
         └── server.ts                       # Application entry point
 ```
 
+## DOCKER SETUP
+
+-   Install Docker and Docker extension on Visual Studio Code `Cmd + Shift + P to open settings to initialize Docker work station`
+-   Add below to docker-compose yaml file:
+    ```
+    version: '3.4'
+    ```
+
+services: royce: image: royce build: context: . dockerfile: ./Dockerfile environment: NODE_ENV: production ports: - 3000:3000 volumes: - .:/usr/src/app links: - mongodb mongodb: image: mongo:latest
+ports: - 27017:27017 volumes: - data:/data/db
+
+volumes: data: ```
+
+-   Modify MONGODB URL to use the docker mongo created with its port number `dockerUrl: 'mongodb://mongodb:27017/royce'`
 
 ## TEST RESTful API on POSTMAN
 
-The default URL is: http://localhost:7000
+The default URL is: http://localhost:3000
 
 -   GET all users
 
-``` 
-Send GET request to http://localhost:7000/api/users/getAllUsers 
+```
+Send GET request to http://localhost:3000/api/users/
 
 Get the Response:
 {
@@ -75,20 +88,20 @@ Get the Response:
 
 -   POST a new user
 
-    `` Send POST request to http://localhost:7000/api/users/register ``
+    `Send POST request to http://localhost:3000/api/users/register`
 
 -   AUTH with user
 
-    `` Send POST request to http://localhost:7000/api/users/login ``
+    `Send POST request to http://localhost:3000/api/users/login`
 
 -   UPDATE a user information
 
-    `` Send POST request to http://localhost:7000/api/users/updateUser/:userID ``
+    `Send POST request to http://localhost:3000/api/users/updateUser/:userID`
 
 -   FIND a single user
 
-    `` Send POST request to http://localhost:7000/api/users/findUser/:userID ``
+    `Send POST request to http://localhost:3000/api/users/findUser/:userID`
 
 -   DELETE a single user
 
-    `` Send POST request to http://localhost:7000/api/users/deleteUser/:userID ``
+    `Send POST request to http://localhost:3000/api/users/deleteUser/:userID`

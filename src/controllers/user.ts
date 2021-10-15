@@ -35,7 +35,7 @@ const registerUser = (req: Request, res: Response, next: NextFunction) => {
           });
       }
    
-      let permission = 1;
+  
           
   const _user = new User({
     _id: new mongoose.Types.ObjectId(),
@@ -44,7 +44,6 @@ const registerUser = (req: Request, res: Response, next: NextFunction) => {
     dob,
     address,
     description,
-    permissionLevel:permission
   })
 
   return _user

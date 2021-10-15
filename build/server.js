@@ -35,7 +35,7 @@ else {
     /** Connect to Firebase */
     /** Connect to Mongo */
     mongoose_1.default
-        .connect(config_1.default.mongo.url, config_1.default.mongo.options)
+        .connect(config_1.default.mongo.dockerUrl, config_1.default.mongo.options)
         .then(() => {
         logging_1.default.info('Mongo Connected');
     })

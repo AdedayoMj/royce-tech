@@ -7,6 +7,7 @@ const logging_1 = __importDefault(require("../config/logging"));
 const user_1 = __importDefault(require("../models/user"));
 const mongoose_1 = __importDefault(require("mongoose"));
 const bcryptjs_1 = __importDefault(require("bcryptjs"));
+const signJWT_1 = __importDefault(require("../services/signJWT"));
 const NAMESPACE = 'Users';
 const validateToken = (req, res, next) => {
     logging_1.default.info(NAMESPACE, 'Token validated, user authorized.');
@@ -24,33 +25,76 @@ const registerUser = (req, res, next) => {
                 error: hashError
             });
         }
-    });
-    const _user = new user_1.default({
-        _id: new mongoose_1.default.Types.ObjectId(),
-        name,
-        dob,
-        address,
-        description,
-    });
-    return _user
-        .save()
-        .then((newUser) => {
-        logging_1.default.info('New user  info created');
-        return res.status(201).json({ user: newUser });
-    })
-        .catch((error) => {
-        logging_1.default.error(error.message);
-        return res.status(500).json({
-            message: error.message
+        const _user = new user_1.default({
+            _id: new mongoose_1.default.Types.ObjectId(),
+            name,
+            password: hash,
+            dob,
+            address,
+            description,
+        });
+        return _user
+            .save()
+            .then((newUser) => {
+            logging_1.default.info('New user  info created');
+            return res.status(201).json({ user: newUser });
+        })
+            .catch((error) => {
+            logging_1.default.error(error.message);
+            return res.status(500).json({
+                message: error.message
+            });
         });
     });
 };
-const login = (req, res, next) => {
+const loginUser = (req, res, next) => {
+    logging_1.default.info('Attempting to login...');
+    let { name, password } = req.body;
+    user_1.default.find({ name })
+        .exec()
+        .then((users) => {
+        if (users.length !== 1) {
+            return res.status(401).json({
+                message: 'Unauthorized'
+            });
+        }
+        bcryptjs_1.default.compare(password, users[0].password, (error, result) => {
+            if (error) {
+                return res.status(401).json({
+                    message: 'Password Mismatch'
+                });
+            }
+            else if (result) {
+                (0, signJWT_1.default)(users[0], (_error, token) => {
+                    if (_error) {
+                        return res.status(500).json({
+                            message: _error.message,
+                            error: _error
+                        });
+                    }
+                    else if (token) {
+                        return res.status(200).json({
+                            message: 'Auth successful',
+                            token: token,
+                            user: users[0]
+                        });
+                    }
+                });
+            }
+        });
+    })
+        .catch((err) => {
+        console.log(err);
+        res.status(500).json({
+            error: err
+        });
+    });
 };
 const read = (req, res, next) => {
     const _id = req.params.userID;
     logging_1.default.info(`Incoming read for user data with id ${_id}`);
     user_1.default.findById(_id)
+        .select('-password')
         .populate('name')
         .exec()
         .then((user) => {
@@ -82,7 +126,7 @@ const update = (req, res, next) => {
                 .then((savedUser) => {
                 logging_1.default.info(`User with id ${_id} updated`);
                 return res.status(201).json({
-                    user: savedUser
+                    message: 'User information updated'
                 });
             })
                 .catch((error) => {
@@ -108,6 +152,7 @@ const update = (req, res, next) => {
 const readAll = (req, res, next) => {
     logging_1.default.info('Returning all Users data information ');
     user_1.default.find()
+        .select('-password')
         .populate('name')
         .exec()
         .then((user) => {
@@ -142,6 +187,7 @@ const deleteUserData = (req, res, next) => {
 };
 exports.default = {
     validateToken,
+    loginUser,
     registerUser,
     read,
     update,

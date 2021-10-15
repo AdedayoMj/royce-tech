@@ -42,7 +42,7 @@ if (cluster.isPrimary) {
   /** Connect to Mongo */
 
   mongoose
-    .connect(config.mongo.url, config.mongo.options)
+    .connect(config.mongo.dockerUrl, config.mongo.options)
     .then(() => {
       logging.info('Mongo Connected')
     })
@@ -56,7 +56,7 @@ if (cluster.isPrimary) {
 
     res.on('finish', () => {
       logging.info(
-                `METHOD: [${req.method}] - URL: [${req.url}] - STATUS: [${res.statusCode}] - IP: [${req.socket.remoteAddress}]`
+        `METHOD: [${req.method}] - URL: [${req.url}] - STATUS: [${res.statusCode}] - IP: [${req.socket.remoteAddress}]`
       )
     })
 

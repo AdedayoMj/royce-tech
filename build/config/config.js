@@ -21,10 +21,11 @@ const MONGO = {
     password: MONGO_PASSWORD,
     username: MONGO_USERNAME,
     options: MONGO_OPTIONS,
-    url: `mongodb+srv://${MONGO_USERNAME}:${MONGO_PASSWORD}@${MONGO_HOST}`
+    url: `mongodb+srv://${MONGO_USERNAME}:${MONGO_PASSWORD}@${MONGO_HOST}`,
+    dockerUrl: `mongodb://mongodb:27017/royce`
 };
 const SERVER_HOSTNAME = process.env.SERVER_HOSTNAME || 'localhost';
-const SERVER_PORT = process.env.SERVER_PORT || 7000;
+const SERVER_PORT = process.env.SERVER_PORT || 3000;
 const SERVER_TOKEN_EXPIRETIME = process.env.SERVER_TOKEN_EXPIRETIME || 3600;
 const SERVER_TOKEN_ISSUER = process.env.SERVER_TOKEN_ISSUER || 'adedayoadegboye';
 const SERVER_TOKEN_SECRET = process.env.SERVER_TOKEN_SECRET || 'roycetechencryptpassword!@';

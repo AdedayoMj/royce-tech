@@ -25,7 +25,7 @@ const UserSchema = new mongoose_1.Schema({
     password: { type: String, required: true },
     dob: { type: String, required: true },
     address: { type: String, unique: true },
-    description: { type: String, unique: true }
+    description: { type: String, unique: true },
 }, {
     timestamps: true
 });
