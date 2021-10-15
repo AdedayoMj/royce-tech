@@ -37,14 +37,30 @@ This is a simple REST API developed using node, mongodb and express with typescr
 
 -   Install Docker and Docker extension on Visual Studio Code `Cmd + Shift + P to open settings to initialize Docker work station`
 -   Add below to docker-compose yaml file:
-    ```
-    version: '3.4'
-    ```
 
-services: royce: image: royce build: context: . dockerfile: ./Dockerfile environment: NODE_ENV: production ports: - 3000:3000 volumes: - .:/usr/src/app links: - mongodb mongodb: image: mongo:latest
-ports: - 27017:27017 volumes: - data:/data/db
+        ```
+        services:
+        royce:
+        image: royce
+        build:
+          context: .
+          dockerfile: ./Dockerfile
+        environment:
+          NODE_ENV: production
+        ports:
+          - 3000:3000
+        volumes:
+          - .:/usr/src/app
+        links:
+          - mongodb
+        mongodb:
+        image: mongo:latest
+        ports:
+          - 27017:27017
+        volumes:
+          - data:/data/db
 
-volumes: data: ```
+    volumes: data: ```
 
 -   Modify MONGODB URL to use the docker mongo created with its port number `dockerUrl: 'mongodb://mongodb:27017/royce'`
 
@@ -55,34 +71,12 @@ The default URL is: http://localhost:3000
 -   GET all users
 
 ```
+
 Send GET request to http://localhost:3000/api/users/
 
-Get the Response:
-{
-    "count": 2,
-    "user": [
-        {
-            "_id": "6168d8e2c185d01a8786329c",
-            "name": "maryam",
-            "dob": "08/08/2020",
-            "address": "Estonia",
-            "description": "royce test",
-            "createdAt": "2021-10-15T01:26:58.525Z",
-            "updatedAt": "2021-10-15T01:53:40.215Z",
-            "__v": 0
-        },
-        {
-            "_id": "6168e257745ae0c01e2da6c3",
-            "name": "permanent",
-            "dob": "02/02/1900",
-            "address": "United Kingdom",
-            "description": "royce test update test",
-            "createdAt": "2021-10-15T02:07:19.555Z",
-            "updatedAt": "2021-10-15T02:07:19.555Z",
-            "__v": 0
-        }
-    ]
-}
+Get the Response: { "count": 2, "user": [ { "_id": "6168d8e2c185d01a8786329c", "name": "maryam", "dob": "08/08/2020", "address": "Estonia", "description": "royce test", "createdAt":
+"2021-10-15T01:26:58.525Z", "updatedAt": "2021-10-15T01:53:40.215Z", "__v": 0 }, { "_id": "6168e257745ae0c01e2da6c3", "name": "permanent", "dob": "02/02/1900", "address": "United Kingdom",
+"description": "royce test update test", "createdAt": "2021-10-15T02:07:19.555Z", "updatedAt": "2021-10-15T02:07:19.555Z", "__v": 0 } ] }
 
 ```
 
@@ -105,3 +99,7 @@ Get the Response:
 -   DELETE a single user
 
     `Send POST request to http://localhost:3000/api/users/deleteUser/:userID`
+
+```
+
+```
