@@ -3,7 +3,7 @@ import logging from '../config/logging'
 import User from '../models/user'
 import mongoose from 'mongoose'
 import bcryptjs from 'bcryptjs';
-import signJWT from '../functions/signJWT';
+import signJWT from '../services/signJWT';
 
 
 const NAMESPACE ='Users';
