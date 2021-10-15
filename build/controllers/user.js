@@ -6,19 +6,33 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const logging_1 = __importDefault(require("../config/logging"));
 const user_1 = __importDefault(require("../models/user"));
 const mongoose_1 = __importDefault(require("mongoose"));
-const create = (req, res, next) => {
-    logging_1.default.info('Attempting to create blog ...');
-    console.log(req.body);
-    const { name, dob, address, description } = req.body;
-    console.log(name);
-    const user = new user_1.default({
+const bcryptjs_1 = __importDefault(require("bcryptjs"));
+const NAMESPACE = 'Users';
+const validateToken = (req, res, next) => {
+    logging_1.default.info(NAMESPACE, 'Token validated, user authorized.');
+    return res.status(200).json({
+        message: 'Token(s) validated'
+    });
+};
+const registerUser = (req, res, next) => {
+    logging_1.default.info('Attempting to create user ...');
+    let { name, dob, address, description, password } = req.body;
+    bcryptjs_1.default.hash(password, 10, (hashError, hash) => {
+        if (hashError) {
+            return res.status(401).json({
+                message: hashError.message,
+                error: hashError
+            });
+        }
+    });
+    const _user = new user_1.default({
         _id: new mongoose_1.default.Types.ObjectId(),
         name,
         dob,
         address,
         description,
     });
-    return user
+    return _user
         .save()
         .then((newUser) => {
         logging_1.default.info('New user  info created');
@@ -30,6 +44,8 @@ const create = (req, res, next) => {
             message: error.message
         });
     });
+};
+const login = (req, res, next) => {
 };
 const read = (req, res, next) => {
     const _id = req.params.userID;
@@ -125,7 +141,8 @@ const deleteUserData = (req, res, next) => {
     });
 };
 exports.default = {
-    create,
+    validateToken,
+    registerUser,
     read,
     update,
     readAll,

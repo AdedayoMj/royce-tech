@@ -4,7 +4,7 @@ import logging from './config/logging'
 import config from './config/config'
 import mongoose from 'mongoose'
 import cors from 'cors'
-import * as dotenv from 'dotenv'
+
 
 import userRoutes from './routes/user'
 
@@ -30,7 +30,6 @@ if (cluster.isPrimary) {
 } else {
   const router = express()
 
-  dotenv.config()
 
   /** Server Handling */
   const httpServer = http.createServer(router)
@@ -82,7 +81,7 @@ if (cluster.isPrimary) {
   })
 
   /** Routes */
-  router.use('/users', userRoutes)
+  router.use('/api/users', userRoutes)
 
   /** Error handling */
   router.use((req, res, next) => {
@@ -94,8 +93,8 @@ if (cluster.isPrimary) {
   })
 
   /** Listen */
-  httpServer.listen(process.env.PORT || 7000, () =>
-    logging.info(`Server is running ${config.server.host}:${process.env.PORT}`)
+  httpServer.listen(config.server.port, () =>
+    logging.info(`Server is running ${config.server.hostname}:${config.server.port}`)
   )
   console.log(`Worker ${process.pid} started`)
 }

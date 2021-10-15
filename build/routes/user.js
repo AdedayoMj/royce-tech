@@ -6,7 +6,7 @@ const express_1 = __importDefault(require("express"));
 const user_1 = __importDefault(require("../controllers/user"));
 const router = express_1.default.Router();
 router.get('/', user_1.default.readAll);
-router.post('/create', user_1.default.create);
+router.post('/register', user_1.default.registerUser);
 router.get('/read/:userID', user_1.default.read);
 router.patch('/update/:userID', user_1.default.update);
 router.delete('/:userID', user_1.default.deleteUserData);

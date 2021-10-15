@@ -1,23 +1,4 @@
 "use strict";
-var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
-    if (k2 === undefined) k2 = k;
-    Object.defineProperty(o, k2, { enumerable: true, get: function() { return m[k]; } });
-}) : (function(o, m, k, k2) {
-    if (k2 === undefined) k2 = k;
-    o[k2] = m[k];
-}));
-var __setModuleDefault = (this && this.__setModuleDefault) || (Object.create ? (function(o, v) {
-    Object.defineProperty(o, "default", { enumerable: true, value: v });
-}) : function(o, v) {
-    o["default"] = v;
-});
-var __importStar = (this && this.__importStar) || function (mod) {
-    if (mod && mod.__esModule) return mod;
-    var result = {};
-    if (mod != null) for (var k in mod) if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
-    __setModuleDefault(result, mod);
-    return result;
-};
 var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
@@ -28,7 +9,6 @@ const logging_1 = __importDefault(require("./config/logging"));
 const config_1 = __importDefault(require("./config/config"));
 const mongoose_1 = __importDefault(require("mongoose"));
 const cors_1 = __importDefault(require("cors"));
-const dotenv = __importStar(require("dotenv"));
 const user_1 = __importDefault(require("./routes/user"));
 const cluster_1 = __importDefault(require("cluster"));
 const os_1 = require("os");
@@ -48,7 +28,6 @@ if (cluster_1.default.isPrimary) {
 }
 else {
     const router = (0, express_1.default)();
-    dotenv.config();
     /** Server Handling */
     const httpServer = http_1.default.createServer(router);
     /** allow cors */
@@ -85,7 +64,7 @@ else {
         next();
     });
     /** Routes */
-    router.use('/users', user_1.default);
+    router.use('/api/users', user_1.default);
     /** Error handling */
     router.use((req, res, next) => {
         const error = new Error('Not found');
@@ -94,7 +73,7 @@ else {
         });
     });
     /** Listen */
-    httpServer.listen(process_1.default.env.PORT || 7000, () => logging_1.default.info(`Server is running ${config_1.default.server.host}:${process_1.default.env.PORT}`));
+    httpServer.listen(config_1.default.server.port, () => logging_1.default.info(`Server is running ${config_1.default.server.hostname}:${config_1.default.server.port}`));
     console.log(`Worker ${process_1.default.pid} started`);
 }
 //# sourceMappingURL=server.js.map
