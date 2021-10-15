@@ -5,21 +5,22 @@ import mongoose from 'mongoose'
 
 const create = (req: Request, res: Response, next: NextFunction) => {
   logging.info('Attempting to create blog ...')
-console.log(req.body);
+  console.log(req.body)
 
-  const { 
+  const {
     name,
     dob,
     address,
-    description } = req.body
-    console.log(name);
+    description
+  } = req.body
+  console.log(name)
 
   const user = new User({
     _id: new mongoose.Types.ObjectId(),
     name,
     dob,
     address,
-    description,
+    description
   })
 
   return user

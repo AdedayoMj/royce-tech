@@ -1,5 +1,5 @@
 import mongoose, { Schema } from 'mongoose'
-import { stringify } from 'querystring'
+
 import IUser from '../interface/user'
 
 const UserSchema: Schema = new Schema(
