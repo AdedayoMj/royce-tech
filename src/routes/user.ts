@@ -9,7 +9,7 @@ router.post('/login', controller.loginUser)
 router.post('/register', controller.registerUser)
 router.get('/findUser/:userID', extractJWT, controller.read)
 router.patch('/updateUser/:userID',extractJWT, controller.update)
-router.delete('/:userID',extractJWT, controller.deleteUserData)
+router.delete('/deleteUser/:userID',extractJWT, controller.deleteUserData)
 router.get('/getAllUsers', controller.readAll)
 
 export = router;
