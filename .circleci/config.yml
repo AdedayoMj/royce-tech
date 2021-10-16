@@ -16,7 +16,7 @@ jobs:
     # A list of available CircleCI Docker Convenience Images are available here: https://circleci.com/developer/images/image/cimg/node
     docker:
       - image: cimg/node:16.10
-      - image: circleci/mongo:latest
+      - image: circleci/mongo:4.4
     # Then run your tests!
     # CircleCI will report the results back to your VCS provider.
     steps:
@@ -47,8 +47,8 @@ jobs:
           name: Install packages
           command: npm install
       - run:
-          name: Connect to MongoDB
-          command: mongo
+          name: Get version
+          command: mongo -v
       - run:
           name: Run tests
           command: npm test
