@@ -59,8 +59,13 @@ This is a simple REST API developed using node, mongodb and express with typescr
           - 27017:27017
         volumes:
           - data:/data/db
+        restart: always
 
-    volumes: data: ```
+        volumes:
+          data:
+        networks:
+          default:
+            name: mongo-network```
 
 -   Modify MONGODB URL to use the docker mongo created with its port number `dockerUrl: 'mongodb://mongodb:27017/royce'`
 
