@@ -33,7 +33,7 @@ jobs:
           pkg-manager: npm
       - run:
           name: Install packages
-          command: npm intsall
+          command: npm install
       - run:
           name: Run tests
           command: npm test
