@@ -1,1 +1,1 @@
-module.exports = {presets: ['@babel/preset-env', "stage-0"]}
+// module.exports = {presets: ['@babel/preset-env', "stage-0"]}
