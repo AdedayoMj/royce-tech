@@ -50,6 +50,7 @@ if (cluster.isPrimary) {
       logging.error(error)
     })
 
+
   /** Log the request */
   router.use((req, res, next) => {
     logging.info(`METHOD: [${req.method}] - URL: [${req.url}] - IP: [${req.socket.remoteAddress}]`)
