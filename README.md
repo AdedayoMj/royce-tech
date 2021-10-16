@@ -172,3 +172,21 @@ beforeAll(async () => {
 
     })
 ```
+
+## DEPLOY TO HEROKU
+
+-   Create an heroku project
+-   Modify the circleci config yaml to add the following:
+
+```
+- run:
+    name: Build and push Docker image to Heroku
+          command: |
+            set -x
+            sudo curl https://cli-assets.heroku.com/install.sh | sh
+            HEROKU_API_KEY=${HEROKU_API_KEY} heroku container:login
+            HEROKU_API_KEY=${HEROKU_API_KEY} heroku container:push -a royce-tech-test web
+            HEROKU_API_KEY=${HEROKU_API_KEY} heroku container:release -a royce-tech-test web
+```
+
+-   Add HEROKU_API_KEY to circleci project settings variable
