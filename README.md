@@ -6,6 +6,7 @@ This is a simple REST API developed using node, mongodb and express with typescr
 
 -   Create a MongoDB atlas to get the secret url and access key
 -   Create a Circle CI account
+-   Install Docker client locally
 -   Install global TypeScript and TypeScript Node `npm install -g typescript ts-node`
 
 ## TO RUN LOCALLY
@@ -15,6 +16,7 @@ This is a simple REST API developed using node, mongodb and express with typescr
 -   run `ts-node-dev src/server.ts` - This will start the application and run on port 7000
 -   run `npm run build` then `npm start` - This can also be used to start the application
 -   run `npm run dev` - This will start the application in development mode
+-   run `docker-compose up` - This will application start docker container
 
 ## FOLDER STRUCTURE
 
@@ -30,6 +32,7 @@ This is a simple REST API developed using node, mongodb and express with typescr
         ├── models                          # DB Models
         ├── routes                          # Application routes / endpoints
         ├── services                        # Application validation
+        ├── test                            # Unit testing
         └── server.ts                       # Application entry point
 ```
 
