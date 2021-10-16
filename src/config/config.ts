@@ -21,7 +21,7 @@ const MONGO = {
   username: MONGO_USERNAME,
   options: MONGO_OPTIONS,
   url: `mongodb+srv://${MONGO_USERNAME}:${MONGO_PASSWORD}@${MONGO_HOST}`,
-  dockerUrl: `mongodb://mongodb:27017/royce`
+  dockerUrl: `mongodb://127.0.0.1:27017/royce`
 }
 
 const SERVER_HOSTNAME = process.env.SERVER_HOSTNAME || 'localhost';
