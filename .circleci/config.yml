@@ -20,16 +20,27 @@ jobs:
     # Then run your tests!
     # CircleCI will report the results back to your VCS provider.
     steps:
+      - setup_remote_docker:
+          docker_layer_caching: true
+      - run:
+          name: Waiting for Mongo
+          command: dockerize -wait tcp://localhost:27017 -timeout 1m
+      - run:
+          name: Install mongo client
+          command: |
+            sudo apt-get install -y mongodb
       # Checkout the code as the first step.
       - checkout
       # Next, the node orb's install-packages step will install the dependencies from a package.json.
       # The orb install-packages step will also automatically cache them for faster future runs.
+      
+      - run:
+          name: Connect to DB
+          command: mongo
       - node/install-packages:
           # If you are using yarn, change the line below from "npm" to "yarn"
           pkg-manager: npm
-      - run:
-          name: Run tests
-          command: npm test
+  
 
 workflows:
   # Below is the definition of your workflow.
