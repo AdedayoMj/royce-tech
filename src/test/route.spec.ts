@@ -1,8 +1,23 @@
 
 const request = require('supertest');
 const app = require('../test/testserver');
+import mongoose from 'mongoose'
+import config from '../config/config';
+import logging from '../config/logging';
 
 
+
+beforeAll(async () => {
+    await mongoose
+        .connect(config.mongo.url, config.mongo.options)
+        .then(() => {
+            logging.info('Mongo Connected')
+        })
+        .catch((error: any) => {
+            logging.error(error)
+        })
+
+})
 let token: any;
 
 
@@ -19,6 +34,18 @@ beforeAll(async () => {
 
         });
 });
+
+afterAll(async () => {
+    try {
+        await mongoose.connection.close()
+    } catch (err) {
+        console.log(err)
+    }
+    // Closing the DB connection allows Jest to exit successfully.
+
+
+})
+
 
 describe('Post Endpoints', () => {
     //to add users to database, uncomment to use
