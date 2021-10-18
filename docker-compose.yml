@@ -2,6 +2,7 @@ version: '3.4'
 
 services:
   royce:
+    container_name: royce
     image: royce
     build:
       context: .
@@ -12,20 +13,28 @@ services:
       - 3000:3000
     volumes:
       - .:/usr/src/app
-    links:
+    environment:
+      - MONGODB_URI=mongodb://mongodb/mongodb
+    depends_on:
       - mongodb
+    networks:
+      - my-network
+    
   mongodb:
+    container_name: mongodb
     image: mongo:latest
     ports:
-      - 27017:27017
+      - 127.0.0.1:27017:27017
     volumes:
       - data:/data/db
     restart: always
+    networks:
+      - my-network
 
 
 volumes:
   data:
 
 networks:
-  default:
-    name: mongo-network
+  my-network:
+    driver: bridge

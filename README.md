@@ -13,7 +13,7 @@ This is a simple REST API developed using node, mongodb and express with typescr
 
 -   Git clone https://github.com/AdedayoMj/royce-tech.git
 -   run `npm install`
--   run `ts-node-dev src/server.ts` - This will start the application and run on port 7000
+-   run `ts-node-dev src/server.ts` - This will start the application and run on port 3000
 -   run `npm run build` then `npm start` - This can also be used to start the application
 -   run `npm run dev` - This will start the application in development mode
 -   run `docker-compose up` - This will application start docker container
@@ -44,6 +44,7 @@ This is a simple REST API developed using node, mongodb and express with typescr
         ```
         services:
         royce:
+        container_name: royce
         image: royce
         build:
           context: .
@@ -54,9 +55,10 @@ This is a simple REST API developed using node, mongodb and express with typescr
           - 3000:3000
         volumes:
           - .:/usr/src/app
-        links:
+        depends_on:
           - mongodb
         mongodb:
+        container_name: mongodb
         image: mongo:latest
         ports:
           - 27017:27017
