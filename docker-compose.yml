@@ -23,8 +23,9 @@ services:
   mongodb:
     container_name: mongodb
     image: mongo:latest
+    command: ["--bind_ip_all"]
     ports:
-      - 127.0.0.1:27017:27017
+      - 27017:27017
     volumes:
       - data:/data/db
     restart: always
