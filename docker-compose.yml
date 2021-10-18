@@ -14,11 +14,12 @@ services:
     volumes:
       - .:/usr/src/app
     environment:
-      - MONGODB_URI=mongodb://mongodb/mongodb
+      - MONGODB_URI ='mongodb://127.0.0.1:27017'
     depends_on:
       - mongodb
     networks:
       mongo_net:
+        ipv4_address: 172.16.0.13
     
   mongodb:
     container_name: mongodb
@@ -30,7 +31,8 @@ services:
     restart: always
     networks:
       mongo_net:
-
+        ipv4_address: 172.16.0.14
+    command: mongod --bind_ip 127.0.0.1,172.16.0.14
 
 volumes:
   data:
@@ -38,3 +40,8 @@ volumes:
 networks:
   mongo_net:
     driver: bridge
+    ipam:
+      driver: default
+      config:
+        - subnet: 172.16.0.0/24
+          gateway: 172.16.0.254
