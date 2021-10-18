@@ -18,24 +18,29 @@ services:
     depends_on:
       - mongodb
     networks:
-      - my-network
+      mongo_net:
     
   mongodb:
     container_name: mongodb
     image: mongo:latest
-    command: ["--bind_ip_all"]
     ports:
       - 27017:27017
     volumes:
       - data:/data/db
     restart: always
     networks:
-      - my-network
+      mongo_net:
+        ipv4_address: 172.16.0.1
+    command: mongod --bind_ip 127.0.0.1,172.16.0.1
 
 
 volumes:
   data:
 
 networks:
-  my-network:
+  mongo_net:
     driver: bridge
+    ipam:
+      config:
+      - subnet: 172.16.0.0/24
+        gateway: 172.16.0.254
