@@ -13,7 +13,7 @@ This is a simple REST API developed using node, mongodb and express with typescr
 
 -   Git clone https://github.com/AdedayoMj/royce-tech.git
 -   run `npm install`
--   run `ts-node-dev src/server.ts` - This will start the application and run on port 7000
+-   run `ts-node-dev src/server.ts` - This will start the application and run on port 3000
 -   run `npm run build` then `npm start` - This can also be used to start the application
 -   run `npm run dev` - This will start the application in development mode
 -   run `docker-compose up` - This will application start docker container
@@ -44,6 +44,7 @@ This is a simple REST API developed using node, mongodb and express with typescr
         ```
         services:
         royce:
+        container_name: royce
         image: royce
         build:
           context: .
@@ -54,9 +55,10 @@ This is a simple REST API developed using node, mongodb and express with typescr
           - 3000:3000
         volumes:
           - .:/usr/src/app
-        links:
+        depends_on:
           - mongodb
         mongodb:
+        container_name: mongodb
         image: mongo:latest
         ports:
           - 27017:27017
@@ -74,12 +76,12 @@ This is a simple REST API developed using node, mongodb and express with typescr
 
 ## TEST RESTful API ON POSTMAN
 
-The default URL is: http://localhost:3000
+The default URL is: http://127.0.0.1:3000
 
 -   GET all users
 
 ```
-Send GET request to http://localhost:3000/api/users/
+Send GET request to http://127.0.0.1:3000/api/users/
 
 Get the Response: { "count": 2,
 "user": [
@@ -108,23 +110,23 @@ Get the Response: { "count": 2,
 
 -   POST a new user
 
-    `Send POST request to http://localhost:3000/api/users/register`
+    `Send POST request to http://127.0.0.1:3000/api/users/register`
 
 -   AUTH with user
 
-    `Send POST request to http://localhost:3000/api/users/login`
+    `Send POST request to http://127.0.0.1:3000/api/users/login`
 
 -   UPDATE a user information
 
-    `Send POST request to http://localhost:3000/api/users/updateUser/:userID`
+    `Send POST request to http://127.0.0.1:3000/api/users/updateUser/:userID`
 
 -   FIND a single user
 
-    `Send POST request to http://localhost:3000/api/users/findUser/:userID`
+    `Send POST request to http://127.0.0.1:3000/api/users/findUser/:userID`
 
 -   DELETE a single user
 
-    `Send POST request to http://localhost:3000/api/users/deleteUser/:userID`
+    `Send POST request to http://127.0.0.1:3000/api/users/deleteUser/:userID`
 
 ## UNIT TESTING USING JEST
 

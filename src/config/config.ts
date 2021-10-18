@@ -14,6 +14,7 @@ const MONGO_OPTIONS = {
 const MONGO_USERNAME = process.env.MONGO_USERNAME || 'iTest_Kanon_user';
 const MONGO_PASSWORD = process.env.MONGO_PASSWORD || 'iTest1234';
 const MONGO_HOST = process.env.MONGO_URL || `itestkanon.xr42i.mongodb.net/myFirstDatabase?retryWrites=true&w=majority`;
+const MONGO_DOCKER_HOST = process.env.MONGO_DOCKER_URI || `mongodb://127.0.0.1:27017`
 
 const MONGO = {
   host: MONGO_HOST,
@@ -21,7 +22,7 @@ const MONGO = {
   username: MONGO_USERNAME,
   options: MONGO_OPTIONS,
   url: `mongodb+srv://${MONGO_USERNAME}:${MONGO_PASSWORD}@${MONGO_HOST}`,
-  dockerUrl: `mongodb://127.0.0.1:27017/royce`
+  dockerUrl: `${MONGO_DOCKER_HOST}`
 }
 
 const SERVER_HOSTNAME = process.env.SERVER_HOSTNAME || 'localhost';

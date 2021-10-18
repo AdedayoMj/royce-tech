@@ -2,6 +2,7 @@ version: '3.4'
 
 services:
   royce:
+    container_name: royce
     image: royce
     build:
       context: .
@@ -12,20 +13,35 @@ services:
       - 3000:3000
     volumes:
       - .:/usr/src/app
-    links:
+    environment:
+      - MONGODB_URI ='mongodb://127.0.0.1:27017'
+    depends_on:
       - mongodb
+    networks:
+      mongo_net:
+        ipv4_address: 172.16.0.13
+    
   mongodb:
+    container_name: mongodb
     image: mongo:latest
     ports:
       - 27017:27017
     volumes:
       - data:/data/db
     restart: always
-
+    networks:
+      mongo_net:
+        ipv4_address: 172.16.0.14
+    command: mongod --bind_ip 127.0.0.1,172.16.0.14
 
 volumes:
   data:
 
 networks:
-  default:
-    name: mongo-network
+  mongo_net:
+    driver: bridge
+    ipam:
+      driver: default
+      config:
+        - subnet: 172.16.0.0/24
+          gateway: 172.16.0.254
